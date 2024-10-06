@@ -1,0 +1,34 @@
+blueprint:
+  name: room_lights_toogle_and_recall_scenes
+  description: Toggle lights for a specific Room
+  domain: automation
+  input:
+    lights_switch:
+      name: Input Toggle Switch
+      selector:
+        entity:
+          filter:
+            domain: input_boolean
+    lights_scene_selector:
+      name: Current Scene Selector
+      description: The selector which contains all available scenes for the room
+      selector:
+        entity:
+          filter:
+            domain: input_select
+    lights_scene_default:
+      name: First Scene
+      description: First scene (default) to be used
+      selector:
+        state:
+          entity_id: !input lights_scene_selector
+    lights_scene_default_behavior:
+      name: Switch-on Scene
+      description: Default behavior for the scene to recall when turning lights on
+      selector:
+        select:
+          options:
+            - label: Use latest
+              value: use_latest
+            - label: Use default
+              value: use_default
