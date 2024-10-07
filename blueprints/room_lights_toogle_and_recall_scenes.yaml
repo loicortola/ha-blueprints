@@ -64,7 +64,7 @@ action:
         target:
           entity_id: scene.{{ lights_switch_entity_id }}_turn_off
     else:
-      - choose:
+      - choose: >
           {% for i in range(0, lights_scenes|length) %}
           - conditions:
               - condition: state
