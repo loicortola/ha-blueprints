@@ -32,3 +32,45 @@ blueprint:
               value: use_latest
             - label: Use default
               value: use_default
+
+# If motion is detected within the delay,
+# we restart the script.
+mode: restart
+max: 1
+max_exceeded: silent
+
+trigger:
+  - platform: state
+    entity_id:
+      - !input lights_switch
+
+variables:
+  lights_switch_entity_id: !input lights_switch
+  lights_scene_default_suffix: !input lights_scene_default
+  lights_scenes: expand(!input lights_scene_selector | default([]))
+action:
+  - if:
+      - condition: state
+        entity_id: !input lights_switch
+        state: "off"
+    then:
+      - action: scene.turn_on
+        metadata: {}
+        target:
+          entity_id: scene.{{ lights_switch_entity_id }}_turn_off
+    else:
+      - choose:
+          - conditions:
+              - condition: state
+                entity_id: input_select.scene_light_studio_salon
+                state: normal
+            sequence:
+              - action: scene.turn_on
+                metadata: {}
+                target:
+                  entity_id: scene.{{ lights_switch_entity_id }}_{{ lights_scene_default }}
+        default:
+          - action: scene.turn_on
+            metadata: {}
+            target:
+              entity_id: scene.{{ lights_switch_entity_id }}_turn_on_scn_{{ lights_scene_default }}
