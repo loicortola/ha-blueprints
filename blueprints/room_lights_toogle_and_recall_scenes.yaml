@@ -38,7 +38,8 @@ variables:
   lights_switch_entity_id: !input lights_switch
   lights_scene_default_suffix: !input lights_scene_default
   lights_scene_selector: !input lights_scene
-  lights_scenes: {{ state_attr(lights_scene_selector, 'options') }}
+  lights_scenes: >
+    {{ state_attr(lights_scene_selector, 'options') }}
 
 # If motion is detected within the delay,
 # we restart the script.
