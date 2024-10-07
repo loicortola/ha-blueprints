@@ -21,7 +21,7 @@ blueprint:
       description: First scene (default) to be used
       selector:
         state:
-          entity_id: !input lights_scene_selector.entity_id
+          entity_id: input_select.home_scenes
     lights_scene_default_behavior:
       name: Switch-on Scene
       description: Default behavior for the scene to recall when turning lights on
